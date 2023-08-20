@@ -18,10 +18,9 @@
  *
  */
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
-//
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+const fs = require('fs');
+const key = fs.readFileSync(".secret").toString().trim();
 
 module.exports = {
   /**
@@ -41,11 +40,49 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-    // development: {
-    //  host: "127.0.0.1",     // Localhost (default: none)
-    //  port: 8545,            // Standard Ethereum port (default: none)
-    //  network_id: "*",       // Any network (default: none)
-    // },
+    development: {
+     host: "127.0.0.1",     // Localhost (default: none)
+     port: 8545,            // Standard Ethereum port (default: none)
+     network_id: "*",       // Any network (default: none)
+    },
+    mainnet_fork: {
+      host: "127.0.0.1",
+      port: 8545,
+      network_id: "1"
+    },
+    ropsten_fork: {
+      host: "127.0.0.1",
+      port: 8545,
+      network_id: "3"
+    },
+    ropsten: {
+      provider: () => new HDWalletProvider(key, `wss://ropsten.infura.io/ws/v3/19ef3d5eaf904bc19d91010334388618`),
+      network_id: 3,       // Ropsten's id
+      gas: 5500000,        // Ropsten has a lower block limit than mainnet
+      confirmations: 2,    // # of confs to wait between deployments. (default: 0)
+      timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+    },
+    sepolia_fork: {
+      host: "127.0.0.1",
+      port: 8545,
+      network_id: "11155111"
+    },
+    sepolia: {
+      provider: () => new HDWalletProvider({
+        mnemonic: {
+        phrase: key
+        },
+        providerOrUrl: "https://sepolia.infura.io/v3/7238a0975b694e2ea22620b959754cbe"
+        }),
+      network_id: 11155111, // Sepolia's network ID
+      gas: 4000000, // Adjust the gas limit as per your requirements
+      gasPrice: 10000000000, // Set the gas price to an appropriate value
+      confirmations: 2, // Set the number of confirmations needed for a transaction
+      timeoutBlocks: 200, // Set the timeout for transactions
+      skipDryRun: true 
+    },
+    
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
@@ -57,17 +94,9 @@ module.exports = {
     // },
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
-    // ropsten: {
-    // provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/YOUR-PROJECT-ID`),
-    // network_id: 3,       // Ropsten's id
-    // gas: 5500000,        // Ropsten has a lower block limit than mainnet
-    // confirmations: 2,    // # of confs to wait between deployments. (default: 0)
-    // timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-    // skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
-    // },
     // Useful for private networks
     // private: {
-    // provider: () => new HDWalletProvider(mnemonic, `https://network.io`),
+    // provider: () => new HDWalletProvider(key, `https://network.io`),
     // network_id: 2111,   // This network is yours, in the cloud.
     // production: true    // Treats this network as if it was a public net. (default: false)
     // }
@@ -81,7 +110,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.8.10",    // Fetch exact version from solc-bin (default: truffle's version)
+      version: "pragma",    // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {

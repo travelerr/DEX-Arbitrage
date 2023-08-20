@@ -1,5 +1,6 @@
 .env
-
+.secret
+.admin
 # Logs
 logs
 *.log

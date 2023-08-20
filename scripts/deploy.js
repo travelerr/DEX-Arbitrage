@@ -1,8 +1,8 @@
 const hre = require("hardhat");
 
 async function main() {
-   [owner] = await ethers.getSigners();
-   console.log(`Owner: ${owner.address}`);
+  [owner] = await ethers.getSigners();
+  console.log(`Owner: ${owner.address}`);
   const contractName = 'Arb';
   await hre.run("compile");
   const smartContract = await hre.ethers.getContractFactory(contractName);
