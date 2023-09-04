@@ -5,6 +5,7 @@
     }
   ],
   "settings": {
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
+    "solidity.compileUsingRemoteVersion": "pragma"
   }
 }

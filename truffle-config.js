@@ -48,7 +48,7 @@ module.exports = {
     mainnet_fork: {
       host: "127.0.0.1",
       port: 8545,
-      network_id: "1"
+      network_id: "*"
     },
     ropsten_fork: {
       host: "127.0.0.1",
@@ -69,12 +69,7 @@ module.exports = {
       network_id: "11155111"
     },
     sepolia: {
-      provider: () => new HDWalletProvider({
-        mnemonic: {
-        phrase: key
-        },
-        providerOrUrl: "https://sepolia.infura.io/v3/7238a0975b694e2ea22620b959754cbe"
-        }),
+      provider: () => new HDWalletProvider(key, `https://sepolia.infura.io/v3/7238a0975b694e2ea22620b959754cbe`),
       network_id: 11155111, // Sepolia's network ID
       gas: 4000000, // Adjust the gas limit as per your requirements
       gasPrice: 10000000000, // Set the gas price to an appropriate value
@@ -82,7 +77,9 @@ module.exports = {
       timeoutBlocks: 200, // Set the timeout for transactions
       skipDryRun: true 
     },
-    
+    plugins: [
+      "hardhat"
+    ]
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
@@ -110,7 +107,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "pragma",    // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.8.13",    // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
