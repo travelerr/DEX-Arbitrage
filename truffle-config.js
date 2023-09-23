@@ -56,7 +56,7 @@ module.exports = {
       network_id: "3"
     },
     ropsten: {
-      provider: () => new HDWalletProvider(key, `wss://ropsten.infura.io/ws/v3/19ef3d5eaf904bc19d91010334388618`),
+      provider: () => new HDWalletProvider(key, process.env.ROPSTEN_RPC_URL_INFURA_WSS),
       network_id: 3,       // Ropsten's id
       gas: 5500000,        // Ropsten has a lower block limit than mainnet
       confirmations: 2,    // # of confs to wait between deployments. (default: 0)
@@ -69,7 +69,7 @@ module.exports = {
       network_id: "11155111"
     },
     sepolia: {
-      provider: () => new HDWalletProvider(key, `https://sepolia.infura.io/v3/7238a0975b694e2ea22620b959754cbe`),
+      provider: () => new HDWalletProvider(key, process.env.SEPOLIA_RPC_URL_INFURA),
       network_id: 11155111, // Sepolia's network ID
       gas: 4000000, // Adjust the gas limit as per your requirements
       gasPrice: 10000000000, // Set the gas price to an appropriate value

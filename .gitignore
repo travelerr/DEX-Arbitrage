@@ -87,6 +87,7 @@ typechain
 .vscode
 .gitattributes
 build
+DEX-Arbitrage.code-workspace
 
 #Hardhat files
 cache
