@@ -5,6 +5,7 @@ require("dotenv").config();
 let config,arb,owner,inTrade,balances;
 const network = hre.network.name;
 if (network === 'aurora') config = require('./../config/aurora.json');
+if (network === 'localhost') config = require('./../config/mainnet.json');
 if (network === 'auroraTestnet') config = require('./../config/auroraTestnet.json');
 if (network === 'fantom') config = require('./../config/fantom.json');
 if (network === 'sepolia') config = require('./../config/sepolia.json');
@@ -51,7 +52,10 @@ const lookForDualTrade = async () => {
     targetRoute = searchForRoutes();
   }
   try {
+    console.log(balances)
     let tradeSize = balances[targetRoute.token1].balance;
+    console.log("tradeSize", tradeSize)
+    console.log(targetRoute.router1, targetRoute.router2, targetRoute.token1, targetRoute.token2, tradeSize)
     const amtBack = await arb.estimateDualDexTrade(targetRoute.router1, targetRoute.router2, targetRoute.token1, targetRoute.token2, tradeSize);
     const multiplier = ethers.BigNumber.from(config.minBasisPointsPerTrade+10000);
     const sizeMultiplied = tradeSize.mul(multiplier);

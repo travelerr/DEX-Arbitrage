@@ -7,6 +7,7 @@ const network = hre.network.name;
 if (network === "aurora") config = require("./../config/aurora.json");
 if (network === "fantom") config = require("./../config/fantom.json");
 if (network === "sepolia") config = require("./../config/sepolia.json");
+if (network === 'localhost') config = require('./../config/mainnet.json');
 
 const main = async () => {
   [owner] = await ethers.getSigners();

@@ -1,0 +1,29 @@
+[
+    {
+        "symbol": "weth",
+        "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "whaleAddress": "0xAc37Ccb7ae873555eb01C74CB713D40d1Bec7F45"
+    },
+    {   "symbol":  "dai",
+        "tokenAddress": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "whaleAddress": "0xD831B3353Be1449d7131e92c8948539b1F18b86A"
+    },
+    {   "symbol": "usdt",
+        "tokenAddress": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "whaleAddress": "0x0162Cd2BA40E23378Bf0FD41f919E1be075f025F"
+    },
+    {   "symbol": "uni",
+        "tokenAddress": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        "whaleAddress": "0x2EC96c9Af82ddD650C0776cb0Da93BEAA7ce2A10"
+    },
+    {   "symbol": "busd",
+        "tokenAddress": "0x4Fabb145d64652a948d72533023f6E7A623C7C53",
+        "whaleAddress": "0x8Fe348f2F890046719aAceA910F01d772Dc20a65"
+    },
+    {
+        "symbol": "usdc",
+        "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "whaleAddress": "0x7713974908Be4BEd47172370115e8b1219F4A5f0"
+    }
+    
+]

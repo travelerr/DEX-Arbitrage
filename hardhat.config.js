@@ -5,6 +5,7 @@ require("dotenv").config();
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
+  defaultNetwork: "localhost",
   networks: {
     aurora: {
       url: `https://mainnet.aurora.dev`,
@@ -22,6 +23,16 @@ module.exports = {
       url: `https://rpc.sepolia.org`,
       accounts: [process.env.privateKey],
     },
+    localhost: {
+      url: `http://127.0.0.1:8545`,
+      accounts: [process.env.privateKey],
+    },
+  },
+  hardhat: {
+    forking: {
+      url: process.env.MAINNET_RPC_URL_INFURA,
+    },
+    chainId: 1,
   },
   solidity: {
     compilers: [

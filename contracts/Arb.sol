@@ -29,6 +29,8 @@ interface IUniswapV2Pair {
 
 contract Arb is Ownable {
 
+	event LogAmountAndPath(uint256 amount, address[] path);
+
 	function swap(address router, address _tokenIn, address _tokenOut, uint256 _amount) private {
 		IERC20(_tokenIn).approve(router, _amount);
 		address[] memory path;
@@ -44,8 +46,10 @@ contract Arb is Ownable {
 		path = new address[](2);
 		path[0] = _tokenIn;
 		path[1] = _tokenOut;
-		console.log("Router", router);
+		console.log("RouterX", router);
 		console.log("Amount", _amount);
+		console.log("Path 0", path[0]);
+		console.log("Path 1", path[1]);
 		uint256[] memory amountOutMins = IUniswapV2Router(router).getAmountsOut(_amount, path);
 		return amountOutMins[path.length -1];
 	}

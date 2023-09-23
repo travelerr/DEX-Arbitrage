@@ -6,6 +6,6 @@
   ],
   "settings": {
     "editor.formatOnSave": false,
-    "solidity.compileUsingRemoteVersion": "pragma"
+    "solidity.compileUsingRemoteVersion": "v0.8.13+commit.abaa5c0e"
   }
 }
