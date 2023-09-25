@@ -1,8 +1,8 @@
 [
     {
-        "symbol": "weth",
-        "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "whaleAddress": "0xAc37Ccb7ae873555eb01C74CB713D40d1Bec7F45"
+        "symbol": "shib",
+        "tokenAddress": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+        "whaleAddress": "0x40B38765696e3d5d8d9d834D8AaD4bB6e418E489"
     },
     {   "symbol":  "dai",
         "tokenAddress": "0x6B175474E89094C44Da98b954EedeAC495271d0F",

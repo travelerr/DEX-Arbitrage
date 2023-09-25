@@ -52,26 +52,30 @@ const lookForDualTrade = async () => {
     targetRoute = searchForRoutes();
   }
   try {
-    console.log(balances)
     let tradeSize = balances[targetRoute.token1].balance;
-    console.log("tradeSize", tradeSize)
-    console.log(targetRoute.router1, targetRoute.router2, targetRoute.token1, targetRoute.token2, tradeSize)
     const amtBack = await arb.estimateDualDexTrade(targetRoute.router1, targetRoute.router2, targetRoute.token1, targetRoute.token2, tradeSize);
     const multiplier = ethers.BigNumber.from(config.minBasisPointsPerTrade+10000);
     const sizeMultiplied = tradeSize.mul(multiplier);
     const divider = ethers.BigNumber.from(10000);
     const profitTarget = sizeMultiplied.div(divider);
+    console.log("amtBack", amtBack);
+    console.log("multiplier", multiplier);
+    console.log("sizeMultiplied", sizeMultiplied);
+    console.log("divider", divider);
+    console.log("profitTarget", profitTarget);
     if (!config.routes.length > 0) {
       fs.appendFile(`./data/${network}RouteLog.txt`, `["${targetRoute.router1}","${targetRoute.router2}","${targetRoute.token1}","${targetRoute.token2}"],`+"\n", function (err) {});
     }
-    if (amtBack.gt(profitTarget)) {
+    console.log(`${amtBack} v ${profitTarget}`)
+    if (amtBack > 0) {
+      console.log(tradeSize)
       await dualTrade(targetRoute.router1,targetRoute.router2,targetRoute.token1,targetRoute.token2,tradeSize);
     } else {
-      await lookForDualTrade();
+      //await lookForDualTrade();
     }
   } catch (e) {
     console.log(e);
-    await lookForDualTrade();	
+    //await lookForDualTrade();	
   }
 }
 

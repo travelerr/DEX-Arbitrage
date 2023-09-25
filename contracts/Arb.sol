@@ -10,7 +10,7 @@ interface IERC20 {
 	function balanceOf(address account) external view returns (uint);
 	function transfer(address recipient, uint amount) external returns (bool);
 	function allowance(address owner, address spender) external view returns (uint);
-	function approve(address spender, uint amount) external returns (bool);
+	function approve(address spender, uint amount) external;
 	function transferFrom(address sender, address recipient, uint amount) external returns (bool);
 	event Transfer(address indexed from, address indexed to, uint value);
 	event Approval(address indexed owner, address indexed spender, uint value);
@@ -29,10 +29,9 @@ interface IUniswapV2Pair {
 
 contract Arb is Ownable {
 
-	event LogAmountAndPath(uint256 amount, address[] path);
-
 	function swap(address router, address _tokenIn, address _tokenOut, uint256 _amount) private {
 		IERC20(_tokenIn).approve(router, _amount);
+		console.log("XXXXXX");
 		address[] memory path;
 		path = new address[](2);
 		path[0] = _tokenIn;
@@ -41,35 +40,33 @@ contract Arb is Ownable {
 		IUniswapV2Router(router).swapExactTokensForTokens(_amount, 1, path, address(this), deadline);
 	}
 
-	function getAmountOutMin(address router, address _tokenIn, address _tokenOut, uint256 _amount) public view returns (uint256) {
+	 function getAmountOutMin(address router, address _tokenIn, address _tokenOut, uint256 _amount) public view returns (uint256) {
 		address[] memory path;
 		path = new address[](2);
 		path[0] = _tokenIn;
 		path[1] = _tokenOut;
-		console.log("RouterX", router);
-		console.log("Amount", _amount);
-		console.log("Path 0", path[0]);
-		console.log("Path 1", path[1]);
 		uint256[] memory amountOutMins = IUniswapV2Router(router).getAmountsOut(_amount, path);
 		return amountOutMins[path.length -1];
 	}
 
-	function estimateDualDexTrade(address _router1, address _router2, address _token1, address _token2, uint256 _amount) external view returns (uint256) {
-			uint256 amtBack1 = getAmountOutMin(_router1, _token1, _token2, _amount);
-			uint256 amtBack2 = getAmountOutMin(_router2, _token2, _token1, amtBack1);
-			return amtBack2;
-		}
-		
-	function dualDexTrade(address _router1, address _router2, address _token1, address _token2, uint256 _amount) external onlyOwner {
-		uint startBalance = IERC20(_token1).balanceOf(address(this));
-		uint token2InitialBalance = IERC20(_token2).balanceOf(address(this));
-		swap(_router1,_token1, _token2,_amount);
-		uint token2Balance = IERC20(_token2).balanceOf(address(this));
-		uint tradeableAmount = token2Balance - token2InitialBalance;
-		swap(_router2,_token2, _token1,tradeableAmount);
-		uint endBalance = IERC20(_token1).balanceOf(address(this));
-		require(endBalance > startBalance, "Trade Reverted, No Profit Made");
+  function estimateDualDexTrade(address _router1, address _router2, address _token1, address _token2, uint256 _amount) external view returns (uint256) {
+		uint256 amtBack1 = getAmountOutMin(_router1, _token1, _token2, _amount);
+		uint256 amtBack2 = getAmountOutMin(_router2, _token2, _token1, amtBack1);
+		return amtBack2;
 	}
+	
+  function dualDexTrade(address _router1, address _router2, address _token1, address _token2, uint256 _amount) external onlyOwner {
+    uint startBalance = IERC20(_token1).balanceOf(address(this));
+    uint token2InitialBalance = IERC20(_token2).balanceOf(address(this));
+    swap(_router1,_token1, _token2,_amount);
+    uint token2Balance = IERC20(_token2).balanceOf(address(this));
+    uint tradeableAmount = token2Balance - token2InitialBalance;
+    swap(_router2,_token2, _token1,tradeableAmount);
+    uint endBalance = IERC20(_token1).balanceOf(address(this));
+	console.log("endBalance", endBalance);
+	console.log("startBalance", startBalance);
+    require(endBalance > startBalance, "Trade Reverted, No Profit Made");
+  }
 
 	function estimateTriDexTrade(address _router1, address _router2, address _router3, address _token1, address _token2, address _token3, uint256 _amount) external view returns (uint256) {
 		uint amtBack1 = getAmountOutMin(_router1, _token1, _token2, _amount);
